@@ -8,27 +8,6 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.7.0/dist/geosearch.css" />
 <script src="https://unpkg.com/lucide@latest"></script>
-<script type="module">
-  // Import Firebase
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-  import { getStorage, ref, uploadBytes, getDownloadURL, listAll, deleteObject } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js";
-  import { getDatabase, ref as dbRef, set, get, remove } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyCKSAd21NHJD9JqDjzrh9mymsVv5gWxJZM",
-    authDomain: "herenow-8eddf.firebaseapp.com",
-    projectId: "herenow-8eddf",
-    storageBucket: "herenow-8eddf.firebasestorage.app",
-    messagingSenderId: "214740805207",
-    appId: "1:214740805207:web:f7967926724e3b26bfa512",
-    measurementId: "G-MQ1LVHF0N9",
-    databaseURL: "https://herenow-8eddf-default-rtdb.europe-west1.firebasedatabase.app"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const storage = getStorage(app);
-  const database = getDatabase(app);
-</script>
 
 <style>
 :root {
@@ -100,15 +79,16 @@ body{margin:0;font-family:"Poppins",system-ui,sans-serif;height:100vh;background
 <script type="module">
 lucide.createIcons();
 
-import { getStorage, ref, uploadBytes, getDownloadURL, listAll, deleteObject } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js";
-import { getDatabase, ref as dbRef, set, get, remove } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js";
+import { getDatabase, ref as dbRef, set, get, remove } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
 
+// Firebase config s opraveným storageBucket
 const firebaseConfig = {
   apiKey: "AIzaSyCKSAd21NHJD9JqDjzrh9mymsVv5gWxJZM",
   authDomain: "herenow-8eddf.firebaseapp.com",
   projectId: "herenow-8eddf",
-  storageBucket: "herenow-8eddf.firebasestorage.app",
+  storageBucket: "herenow-8eddf.appspot.com",
   messagingSenderId: "214740805207",
   appId: "1:214740805207:web:f7967926724e3b26bfa512",
   measurementId: "G-MQ1LVHF0N9",
@@ -119,10 +99,12 @@ const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
 const database = getDatabase(app);
 
+// Mapa
 const map = L.map("map").setView([50.0755,14.4378],6);
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{attribution:'&copy; OpenStreetMap'}).addTo(map);
 map.zoomControl.setPosition("bottomright");
 
+// Hledání města
 const {OpenStreetMapProvider}=window.GeoSearch;
 const provider=new OpenStreetMapProvider();
 const citySearch=document.getElementById("citySearch");
@@ -134,6 +116,7 @@ citySearch.addEventListener("keypress", async e=>{
   }
 });
 
+// Panel a galerie
 const infoPanel=document.getElementById("infoPanel");
 const nameInput=document.getElementById("nameInput");
 const captionInput=document.getElementById("captionInput");
@@ -145,21 +128,23 @@ const clearBtn=document.getElementById("clearBtn");
 let pendingLatLng=null;
 let currentFile=null;
 
-// načtení fotek z Firebase
+// Načtení fotek z Firebase
 loadPhotos();
 
-// klik na mapu → vybrat fotku
+// Klik na mapu → vybrat fotku
 map.on("click", e=>{
   pendingLatLng=e.latlng;
   photoInput.click();
 });
 
+// Vybrání souboru
 photoInput.addEventListener("change", e=>{
   if(!e.target.files[0]) return;
   currentFile=e.target.files[0];
   infoPanel.style.display="flex";
 });
 
+// Přidání fotky
 saveBtn.addEventListener("click", async ()=>{
   if(!currentFile || !pendingLatLng) return;
   const name=nameInput.value.trim()||"Neznámý";
@@ -178,14 +163,18 @@ saveBtn.addEventListener("click", async ()=>{
   captionInput.value="";
 });
 
+// Načtení fotek a 24h expirace
 async function loadPhotos(){
   const snapshot=await get(dbRef(database,"photos"));
   if(!snapshot.exists()) return;
   const data=snapshot.val();
   gallery.querySelectorAll(".gallery-item").forEach(e=>e.remove());
   map.eachLayer(layer => { if(layer instanceof L.Marker) map.removeLayer(layer); });
-  Object.entries(data).forEach(([id,p])=>{
-    if(Date.now()-p.timestamp>24*60*60*1000){remove(dbRef(database,`photos/${id}`));return;}
+  Object.entries(data).forEach(async ([id,p])=>{
+    if(Date.now()-p.timestamp>24*60*60*1000){
+      await remove(dbRef(database,`photos/${id}`));
+      return;
+    }
     addPhotoMarker(p);
     const div=document.createElement("div");
     div.className="gallery-item";
@@ -195,11 +184,13 @@ async function loadPhotos(){
   });
 }
 
+// Přidání markeru
 function addPhotoMarker({lat,lng,image,name,caption}){
   const marker=L.marker([lat,lng]).addTo(map);
   marker.bindPopup(`<img src="${image}"/><div class="caption"><b>${name}</b>: ${caption}</div>`);
 }
 
+// Smazání všech fotek
 clearBtn.addEventListener("click", async ()=>{
   if(confirm("Opravdu smazat všechny fotky?")){
     await remove(dbRef(database,"photos"));
