@@ -153,18 +153,7 @@
     @media (min-width: 768px) { section h2 { margin-bottom:40px; } }
     section h2::after { content: ""; display: block; width: 60px; height: 4px; background: #d4af37; margin: 20px auto 0; box-shadow: 0 0 15px rgba(212, 175, 55, 0.6); border-radius: 2px; }
 
-    /* SEKCE PROGRAMU (NOVÉ KARTIČKY) */
-    .program-tabs {
-      display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; flex-wrap: wrap;
-    }
-    .program-tab {
-      background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(212, 175, 55, 0.2);
-      color: #fff; padding: 10px 25px; border-radius: 25px; font-weight: 600; font-size: 0.9rem;
-      transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px;
-    }
-    .program-tab.active, .program-tab:hover {
-      background: #d4af37; color: #050505; border-color: #d4af37; box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
-    }
+    /* SEKCE PROGRAMU */
     .program-grid {
       display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px;
       max-width: 1200px; margin: 0 auto;
@@ -524,73 +513,29 @@
     </div>
   </header>
 
+  <!-- SEKCE: PROGRAM KINA -->
   <section id="program" style="background: #080808;">
     <h2 data-aos="fade-up">Aktuální Program</h2>
     
-    <div class="program-tabs" data-aos="fade-up" data-aos-delay="100">
-      <button class="program-tab active" onclick="filterProgram('all')">Všechny události</button>
-      <button class="program-tab" onclick="filterProgram('movie')">Filmy</button>
-      <button class="program-tab" onclick="filterProgram('event')">Speciální akce</button>
-    </div>
-
     <div class="program-grid" data-aos="fade-up" data-aos-delay="200">
       
-      <div class="movie-card" data-type="movie">
+      <!-- Jediná událost: Slavnostní otevření -->
+      <div class="movie-card">
         <div class="movie-img-container">
-          <span class="movie-badge">Premiéra</span>
-          <img src="https://images.unsplash.com/photo-1594909122845-11baa439b7bf?q=80&w=600&auto=format&fit=cover" alt="Mlynář">
-        </div>
-        <div class="movie-content">
-          <h3 class="movie-title">Mlynář (KVM Originals)</h3>
-          <div class="movie-details">
-            <div class="movie-detail-item">⏱ <strong>8 min</strong></div>
-            <div class="movie-detail-item">💰 <strong>50 Kč</strong></div>
-            <div class="movie-detail-item">📅 <strong>?. 8. 2026</strong></div>
-            <div class="movie-detail-item">⭐ <strong>CZ Tvorba</strong></div>
-          </div>
-          <p class="movie-desc">Jakub nade vše miluje svůj rodinný mlýn. Idylu drsně naruší příchod arogantního Vagena, který chce pozemek získat pro stavbu továrny. Jakub rozjíždí nebezpečnou hru...</p>
-          <div class="movie-btn-container">
-            <a href="#vstupenky" class="movie-card-btn">Rezervovat</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="movie-card" data-type="movie">
-        <div class="movie-img-container">
-          <span class="movie-badge">Kultovní klasika</span>
-          <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=600&auto=format&fit=cover" alt="Simpsonovi ve filmu">
-        </div>
-        <div class="movie-content">
-          <h3 class="movie-title">Simpsonovi ve filmu</h3>
-          <div class="movie-details">
-            <div class="movie-detail-item">⏱ <strong>87 min</strong></div>
-            <div class="movie-detail-item">💰 <strong>50 Kč</strong></div>
-            <div class="movie-detail-item">📅 <strong>?. 8. 2026</strong></div>
-            <div class="movie-detail-item">🗣 <strong>CZ Dabing</strong></div>
-          </div>
-          <p class="movie-desc">Homer omylem znečistí springfieldské jezero a uvrhne celé město do obří karanténní kopule. Podaří se mu zachránit rodinu i celé Springfield před zkázou?</p>
-          <div class="movie-btn-container">
-            <a href="#vstupenky" class="movie-card-btn">Rezervovat</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="movie-card" data-type="event">
-        <div class="movie-img-container">
-          <span class="movie-badge" style="color: #e8c655; border-color: #e8c655;">Slavnostní Akce</span>
+          <span class="movie-badge">Slavnostní Otevření</span>
           <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=600&auto=format&fit=cover" alt="Slavnostní otevření">
         </div>
         <div class="movie-content">
-          <h3 class="movie-title">Grand Opening: Otevření mlýna</h3>
+          <h3 class="movie-title">Slavnostní otevření kina</h3>
           <div class="movie-details">
-            <div class="movie-detail-item">⏱ <strong>Individuální</strong></div>
-            <div class="movie-detail-item">💰 <strong>Vstup volný</strong></div>
+            <div class="movie-detail-item">⏱ <strong>Prohlídka + Filmy</strong></div>
+            <div class="movie-detail-item">💰 <strong>50 Kč</strong></div>
             <div class="movie-detail-item">📅 <strong>?. 8. 2026</strong></div>
-            <div class="movie-detail-item">🥂 <strong>Welcome drink</strong></div>
+            <div class="movie-detail-item">🍿 <strong>Včetně programu</strong></div>
           </div>
-          <p class="movie-desc">Slavnostní přestřižení pásky nového soukromého kina spojené s prohlídkou historických prostor Steinmetzova mlýna a představením vizí do budoucna.</p>
+          <p class="movie-desc">Kompletní program zahájení provozu: Čeká vás prohlídka kina, exkluzivní premiéra filmu Mlynář (cca 8 min) a následné promítání kultovního snímku Simpsonovi ve filmu!</p>
           <div class="movie-btn-container">
-            <a href="#podpora" class="movie-card-btn">Více informací</a>
+            <a href="#vstupenky" class="movie-card-btn">Rezervovat vstupenku</a>
           </div>
         </div>
       </div>
@@ -602,7 +547,7 @@
     <h2 data-aos="fade-up">O našem kině</h2>
     <div class="kino-container">
       <div class="kino-text-block" data-aos="fade-right">
-        <p>Kino ve mlýně je nové soukromé kino situované v historických prostorech Steinmetzova mlýna. Naším cílem je propojit jedinečnou atmosféru starého mlýna s nejmodernějším filmovým zážitkem.</p>
+        <p>Kino ve mlýně bude nové soukromé kino situované v historických prostorech Steinmetzova mlýna. Naším cílem je propojit jedinečnou atmosféru starého mlýna s nejmodernějším filmovým zážitkem.</p>
         
         <div class="kino-features">
           <div class="feature-card">
@@ -755,30 +700,11 @@
         });
 
         // Efekt zvětšení na interaktivních prvcích
-        const interactiveElements = document.querySelectorAll('a, button, select, input, .menu-btn, .close-modal, .program-tab');
+        const interactiveElements = document.querySelectorAll('a, button, select, input, .menu-btn, .close-modal');
         interactiveElements.forEach(el => {
             el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
             el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
         });
-    }
-
-    // Funkce pro filtrování programu
-    function filterProgram(type) {
-      const cards = document.querySelectorAll('.movie-card');
-      const tabs = document.querySelectorAll('.program-tab');
-      
-      tabs.forEach(tab => tab.classList.remove('active'));
-      event.target.classList.add('active');
-
-      cards.forEach(card => {
-        if (type === 'all' || card.getAttribute('data-type') === type) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-      // Obnovení AOS pro přepočítání pozic
-      AOS.refresh();
     }
 
     // Scroll efekt navigace
