@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>     
 <html lang="cs">
 <head>
@@ -44,7 +45,7 @@
     /* VLASTNÍ KURZOR (Optimalizovaný) */
     @media (pointer: fine) {
       body { cursor: none; }
-      a, button, select, input, .menu-btn, .close-modal, .program-tab { cursor: none; }
+      a, button, select, input, .menu-btn, .close-modal, .program-tab, .seat { cursor: none; }
       .cursor-dot {
         width: 8px; height: 8px; background: #d4af37;
         position: fixed; top: 0; left: 0; border-radius: 50%;
@@ -199,6 +200,91 @@
       .movie-content { padding: 20px; }
       .movie-title { font-size: 1.2rem; }
     }
+
+    /* DESIGN MAPY SEDADEL (SÁL KINA) */
+    .cinema-hall {
+      margin: 20px auto 25px;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 16px;
+      border: 1px solid rgba(212, 175, 55, 0.1);
+      max-width: 320px;
+    }
+    .screen {
+      width: 80%;
+      height: 6px;
+      background: #d4af37;
+      margin: 0 auto 30px;
+      border-radius: 50%;
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.7);
+    }
+    .screen-text {
+      font-size: 0.7rem;
+      color: rgba(212, 175, 55, 0.6);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-top: -25px;
+      margin-bottom: 25px;
+    }
+    .seating-row {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+    .seating-row::before {
+      content: attr(data-row);
+      position: absolute;
+      left: 35px;
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 0.8rem;
+      font-weight: bold;
+      line-height: 40px;
+    }
+    .seat {
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      color: #f1f1f1;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    .seat:hover:not(.occupied) {
+      background: rgba(212, 175, 55, 0.2);
+      border-color: #d4af37;
+      transform: scale(1.05);
+    }
+    /* Stav vybráno uživatelem */
+    .seat.selected {
+      background: #d4af37 !important;
+      color: #050505 !important;
+      border-color: #fff;
+      box-shadow: 0 0 12px #d4af37;
+    }
+    /* Stav OBSAZENO správcem - Pro ruční úpravu stačí přepsat třídu na daném elementu */
+    .seat.occupied {
+      background: #252525 !important;
+      border-color: rgba(255, 0, 0, 0.3) !important;
+      color: rgba(255, 255, 255, 0.15) !important;
+      text-decoration: line-through;
+    }
+    .seating-legend {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      font-size: 0.75rem;
+      margin-top: 15px;
+      opacity: 0.8;
+    }
+    .legend-item { display: flex; align-items: center; gap: 6px; }
+    .legend-box { width: 14px; height: 14px; border-radius: 4px; border: 1px solid; }
 
     /* O KINĚ */
     .kino-container {
@@ -405,7 +491,7 @@
       background: linear-gradient(135deg, #151515, #0a0a0a); border: 1px solid rgba(212, 175, 55, 0.3);
       padding: 35px 20px; border-radius: 20px; width: 100%; max-width: 450px;
       text-align: center; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.8);
-      max-height: 90vh; overflow-y: auto;
+      max-height: 95vh; overflow-y: auto;
     }
     @media (min-width: 768px) { .modal-content { padding: 45px 35px; border-radius: 25px; } }
     .close-modal { 
@@ -481,10 +567,35 @@
   <div id="reservation-modal" class="custom-modal">
     <div class="modal-content" style="border-color: #d4af37; background: linear-gradient(145deg, #1a1a1a, #080808);">
       <span class="close-modal" onclick="toggleModal('reservation-modal')">&times;</span>
-      <h2 style="color:#d4af37; margin-bottom:10px; font-size: 1.8rem; font-weight: 800;">Rezervace Místa</h2>
-      <p style="margin-bottom: 25px; font-size: 0.95rem; opacity: 0.8;">Slavnostní otevření kina — Cena: <strong style="color:#d4af37;">50 Kč</strong></p>
+      <h2 style="color:#d4af37; margin-bottom:5px; font-size: 1.8rem; font-weight: 800;">Rezervace Místa</h2>
+      <p style="margin-bottom: 20px; font-size: 0.95rem; opacity: 0.8;">Zvolte sedadlo. Cena: <strong style="color:#d4af37;">50 Kč</strong></p>
       
-      <form action="https://formsubmit.co/kinovemlyne@seznam.cz" method="POST">
+      <div class="cinema-hall">
+        <div class="screen"></div>
+        <div class="screen-text">Plátno</div>
+        
+        <div class="seating-row" data-row="1.">
+          <div class="seat" data-seat="1" onclick="selectSeat(this)">1</div>
+          <div class="seat" data-seat="2" onclick="selectSeat(this)">2</div>
+          <div class="seat" data-seat="3" onclick="selectSeat(this)">3</div>
+        </div>
+        
+        <div class="seating-row" data-row="2.">
+          <div class="seat" data-seat="4" onclick="selectSeat(this)">4</div>
+          <div class="seat" data-seat="5" onclick="selectSeat(this)">5</div>
+          <div class="seat" data-seat="6" onclick="selectSeat(this)">6</div>
+        </div>
+
+        <div class="seating-legend">
+          <div class="legend-item"><div class="legend-box" style="border-color:#d4af37; background:transparent;"></div> Volno</div>
+          <div class="legend-item"><div class="legend-box" style="border-color:#fff; background:#d4af37;"></div> Vybráno</div>
+          <div class="legend-item"><div class="legend-box" style="border-color:rgba(255,0,0,0.3); background:#252525;"></div> Obsazeno</div>
+        </div>
+      </div>
+
+      <form action="https://formsubmit.co/kinovemlyne@seznam.cz" method="POST" onsubmit="return validateReservation()">
+        <input type="hidden" name="Vybrané sedadlo" id="selected-seat-input" required>
+        
         <input type="text" name="Jméno" id="res-name" placeholder="Vaše jméno" required>
         <input type="email" name="Email" placeholder="Váš e-mail" required>
         <select name="Platba" required>
@@ -635,7 +746,7 @@
     
     <div class="originals-intro-text" style="text-align: center; margin-bottom: 40px; border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding-bottom: 25px;">
       <p style="font-size: 1.1rem; line-height: 1.8; opacity: 0.9;">
-        Projekt <strong>KVM Originals</strong> přináší exkluzivní autorské filmy, které vznikají přímo v autentických prostorech našeho mlýna. Necháváme ožít jedinečnou atmosféru tohoto místa, jeho bohatou historii a propojujeme je s napínavými příběhy. Každý snímek z této produkce je stvořen speciálně pro plátno Kina ve mlýně a nikde jinde ho neuvidíte.
+        Projekt <strong>KVM Originals</strong> přináší exkluzivní autorské filmy, které vznikají přímo v autentických prostorech našeho mlýna. Necháváme ožít jedinečną atmosféru tohoto místa, jeho bohatou historii a propojujeme je s napínavými příběhy. Každý snímek z této produkce je stvořen speciálně pro plátno Kina ve mlýně a nikde jinde ho neuvidíte.
       </p>
     </div>
 
@@ -697,11 +808,43 @@
         });
 
         // Efekt zvětšení na interaktivních prvcích
-        const interactiveElements = document.querySelectorAll('a, button, select, input, .menu-btn, .close-modal');
-        interactiveElements.forEach(el => {
-            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-        });
+        function refreshCursorListeners() {
+          const interactiveElements = document.querySelectorAll('a, button, select, input, .menu-btn, .close-modal, .seat');
+          interactiveElements.forEach(el => {
+              el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+              el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+          });
+        }
+        refreshCursorListeners();
+    }
+
+    // Interaktivní výběr sedadel v modalovém okně
+    function selectSeat(seatElement) {
+      if (seatElement.classList.contains('occupied')) return; // Obsazené nelze vybrat
+      
+      // Jelikož si uživatel vybírá jedno konkrétní místo k rezervaci:
+      const totalSelected = document.querySelectorAll('.seat.selected');
+      totalSelected.forEach(s => { if (s !== seatElement) s.classList.remove('selected'); });
+      
+      seatElement.classList.toggle('selected');
+      
+      // Uložení hodnoty do skrytého inputu formuláře
+      const seatInput = document.getElementById('selected-seat-input');
+      if (seatElement.classList.contains('selected')) {
+        seatInput.value = "Sedadlo číslo " + seatElement.getAttribute('data-seat');
+      } else {
+        seatInput.value = "";
+      }
+    }
+
+    // Validace, zda bylo před odesláním vybráno sedadlo
+    function validateReservation() {
+      const seatInput = document.getElementById('selected-seat-input');
+      if (!seatInput.value) {
+        alert("Před odesláním rezervace si prosím kliknutím zvolte jedno volné sedadlo v plánu sálu.");
+        return false;
+      }
+      return true;
     }
 
     // Scroll efekt navigace
@@ -793,3 +936,5 @@
   </script>
 </body>
 </html>
+
+```
