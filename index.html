@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>     
 <html lang="cs">
 <head>
@@ -157,7 +156,7 @@
     /* SEKCE PROGRAMU */
     .program-grid {
       display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px;
-      max-width: 1200px; margin: 0 auto;
+      max-width: 1200px; margin: 0 auto; align-items: start;
     }
     .movie-card {
       background: linear-gradient(135deg, rgba(20,20,20,0.8), rgba(10,10,10,0.95));
@@ -193,6 +192,30 @@
       font-size: 0.9rem; font-weight: 700; text-decoration: none; transition: all 0.3s ease; text-transform: uppercase;
     }
     .movie-card-btn:hover { background: #d4af37; color: #050505; box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3); }
+
+    /* BALÍČKY PRONÁJMU */
+    .packages-container { display: flex; flex-direction: column; gap: 20px; margin-top: 15px; }
+    .package-box {
+      background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(212, 175, 55, 0.1);
+      border-radius: 14px; padding: 15px; transition: 0.3s;
+    }
+    .package-box:hover { border-color: rgba(212, 175, 55, 0.4); background: rgba(255, 255, 255, 0.04); }
+    .package-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .package-name { font-weight: 700; font-size: 1.1rem; color: #fff; }
+    .package-price { color: #d4af37; font-weight: 700; font-size: 1.05rem; }
+    .package-features { list-style: none; font-size: 0.85rem; opacity: 0.85; margin: 10px 0 15px; line-height: 1.5; }
+    .package-features li { margin-bottom: 4px; position: relative; padding-left: 15px; }
+    .package-features li::before { content: "•"; color: #d4af37; position: absolute; left: 0; }
+    .package-toggle-btn {
+      width: 100%; padding: 10px; background: transparent; border: 1px solid rgba(212, 175, 55, 0.4);
+      color: #d4af37; font-weight: 700; border-radius: 8px; text-transform: uppercase; font-size: 0.8rem;
+    }
+    .package-toggle-btn:hover { background: rgba(212, 175, 55, 0.1); }
+    .rental-form-container { display: none; margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(212, 175, 55, 0.1); }
+    .rental-form-container.active { display: block; }
+    .rental-form input { padding: 10px; margin-bottom: 10px; font-size: 0.85rem; border-radius: 8px; }
+    .rental-form label { display: block; font-size: 0.75rem; color: #d4af37; margin-bottom: 4px; text-align: left; font-weight: 600; }
+    .rental-form button { padding: 12px; font-size: 0.9rem; border-radius: 8px; margin-top: 5px; }
 
     @media (max-width: 600px) {
       .program-grid { grid-template-columns: 1fr; gap: 20px; padding: 0 10px; }
@@ -268,7 +291,7 @@
       border-color: #fff;
       box-shadow: 0 0 12px #d4af37;
     }
-    /* Stav OBSAZENO správcem - Pro ruční úpravu stačí přepsat třídu na daném elementu */
+    /* Stav OBSAZENO správcem */
     .seat.occupied {
       background: #252525 !important;
       border-color: rgba(255, 0, 0, 0.3) !important;
@@ -456,7 +479,7 @@
     }
     @media (min-width: 768px) { .glass-card { padding: 50px 40px; border-radius: 30px; } }
 
-    form input, form select, .modal-content input, .glass-card input, .glass-card select {
+    form input, form select, .modal-content input, .glass-card input, .glass-card select, .rental-form input {
       width:100%; padding:14px; margin-bottom:12px;
       border-radius:12px; border: 1px solid rgba(255,255,255,0.1);
       background: rgba(0,0,0,0.6); color:white; font-family: 'Poppins', sans-serif;
@@ -465,10 +488,10 @@
     }
     @media (min-width: 768px) { form input, form select, .modal-content input, .glass-card input, .glass-card select { padding: 18px; margin-bottom: 20px; border-radius:15px; font-size: 1rem; } }
     
-    form input:focus, form select:focus, .modal-content input:focus, .glass-card input:focus, .glass-card select:focus {
+    form input:focus, form select:focus, .modal-content input:focus, .glass-card input:focus, .glass-card select:focus, .rental-form input:focus {
       outline: none; border-color: #d4af37; box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); background: rgba(0,0,0,0.8);
     }
-    form button, .modal-content button, .glass-card button {
+    form button, .modal-content button, .glass-card button, .rental-form button {
       width: 100%; padding: 15px; border-radius: 12px; border: none;
       background: linear-gradient(135deg, #e8c655, #d4af37); color: #050505; 
       font-weight: 800; text-transform: uppercase; font-size: 1.05rem;
@@ -476,8 +499,8 @@
       display: block;
     }
     @media (min-width: 768px) { form button, .modal-content button, .glass-card button { padding: 18px; border-radius: 15px; font-size: 1.1rem; } }
-    form button:hover, .modal-content button:hover, .glass-card button:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(212, 175, 55, 0.4); }
-    form button:active, .modal-content button:active, .glass-card button:active { transform: translateY(0); }
+    form button:hover, .modal-content button:hover, .glass-card button:hover, .rental-form button:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(212, 175, 55, 0.4); }
+    form button:active, .modal-content button:active, .glass-card button:active, .rental-form button:active { transform: translateY(0); }
 
     /* MODAL SYSTÉMY (LOGIN & REZERVACE) */
     .custom-modal {
@@ -667,6 +690,116 @@
         </div>
       </div>
 
+      <!-- KARTA: PRONAJMUTÍ KINA -->
+      <div class="movie-card">
+        <div class="movie-img-container">
+          <span class="movie-badge">Exkluzivní Služba</span>
+          <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=800&q=80" alt="Pronajmutí kina">
+        </div>
+        <div class="movie-content">
+          <h3 class="movie-title">Pronajmutí kina</h3>
+          <p class="movie-desc">Užijte si jedinečný filmový večer v naprostém soukromí historického mlýna. Vyberte si jeden z našich výhodných balíčků a zarezervujte si celý sál jen pro sebe a své přátele či rodinu.</p>
+          
+          <div class="packages-container">
+            
+            <!-- Balíček Basic -->
+            <div class="package-box">
+              <div class="package-header">
+                <span class="package-name">🎬 Basic</span>
+                <span class="package-price">249 Kč</span>
+              </div>
+              <p style="font-size: 0.8rem; opacity: 0.8;">Ideální pro nenáročný filmový večer.</p>
+              <ul class="package-features">
+                <li>Pronájem celého kina</li>
+                <li>Až 6 osob</li>
+                <li>Výběr z filmů dostupných pouze na Netflixu</li>
+                <li>Délka pronájmu až 2 hodiny</li>
+              </ul>
+              <button class="package-toggle-btn" onclick="toggleRentalForm('form-basic')">Rezervovat</button>
+              
+              <div id="form-basic" class="rental-form-container">
+                <form action="https://formsubmit.co/kinovemlyne@seznam.cz" method="POST" class="rental-form">
+                  <input type="hidden" name="Balíček" value="Basic - 249 Kč">
+                  <input type="text" name="Jméno" placeholder="Jméno" required>
+                  <input type="text" name="Příjmení" placeholder="Příjmení" required>
+                  <input type="email" name="Email" placeholder="E-mail" required>
+                  <input type="tel" name="Telefon" placeholder="Telefon" required>
+                  <label>Termín pronájmu:</label>
+                  <input type="date" name="Termín" required>
+                  <label>Čas pronájmu:</label>
+                  <input type="time" name="Čas" required>
+                  <button type="submit">Odeslat poptávku</button>
+                </form>
+              </div>
+            </div>
+
+            <!-- Balíček Standard -->
+            <div class="package-box" style="border-color: rgba(212, 175, 55, 0.4);">
+              <div class="package-header">
+                <span class="package-name">⭐ Standard</span>
+                <span class="package-price">399 Kč</span>
+              </div>
+              <p style="font-size: 0.8rem; color: #d4af37; font-weight: 600;">Doporučujeme • Větší svoboda</p>
+              <ul class="package-features">
+                <li>Vše z balíčku Basic</li>
+                <li>Výběr z filmů na Netflix, Disney+ a HBO Max</li>
+                <li>Popcorn pro každého</li>
+                <li>Délka pronájmu až 3 hodiny</li>
+              </ul>
+              <button class="package-toggle-btn" style="background: rgba(212, 175, 55, 0.1);" onclick="toggleRentalForm('form-standard')">Rezervovat</button>
+              
+              <div id="form-standard" class="rental-form-container">
+                <form action="https://formsubmit.co/kinovemlyne@seznam.cz" method="POST" class="rental-form">
+                  <input type="hidden" name="Balíček" value="Standard - 399 Kč">
+                  <input type="text" name="Jméno" placeholder="Jméno" required>
+                  <input type="text" name="Příjmení" placeholder="Příjmení" required>
+                  <input type="email" name="Email" placeholder="E-mail" required>
+                  <input type="tel" name="Telefon" placeholder="Telefon" required>
+                  <label>Termín pronájmu:</label>
+                  <input type="date" name="Termín" required>
+                  <label>Čas pronájmu:</label>
+                  <input type="time" name="Čas" required>
+                  <button type="submit">Odeslat poptávku</button>
+                </form>
+              </div>
+            </div>
+
+            <!-- Balíček VIP -->
+            <div class="package-box">
+              <div class="package-header">
+                <span class="package-name">👑 VIP</span>
+                <span class="package-price">599 Kč</span>
+              </div>
+              <p style="font-size: 0.8rem; opacity: 0.8;">Nejlepší soukromý filmový zážitek.</p>
+              <ul class="package-features">
+                <li>Vše z balíčku Standard</li>
+                <li>Nápoj pro každého</li>
+                <li>Personalizované uvítání na plátně</li>
+                <li>Délka pronájmu až 4 hodiny</li>
+                <li>Přednostní rezervace termínu</li>
+              </ul>
+              <button class="package-toggle-btn" onclick="toggleRentalForm('form-vip')">Rezervovat</button>
+              
+              <div id="form-vip" class="rental-form-container">
+                <form action="https://formsubmit.co/kinovemlyne@seznam.cz" method="POST" class="rental-form">
+                  <input type="hidden" name="Balíček" value="VIP - 599 Kč">
+                  <input type="text" name="Jméno" placeholder="Jméno" required>
+                  <input type="text" name="Příjmení" placeholder="Příjmení" required>
+                  <input type="email" name="Email" placeholder="E-mail" required>
+                  <input type="tel" name="Telefon" placeholder="Telefon" required>
+                  <label>Termín pronájmu:</label>
+                  <input type="date" name="Termín" required>
+                  <label>Čas pronájmu:</label>
+                  <input type="time" name="Čas" required>
+                  <button type="submit">Odeslat poptávku</button>
+                </form>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -712,7 +845,7 @@
       <div class="event" data-aos="fade-up" data-aos-delay="200">
         <div class="event-content">
           <span class="event-date">Fáze 3</span>
-          <p class="event-text"> Montáž techniky a nábitku, dodělávání posledních detailů.</p>
+          <p class="event-text"> Montáž techniky a nábytku, dodělávání posledních detailů.</p>
         </div>
       </div>
       <div class="event" data-aos="fade-up" data-aos-delay="300">
@@ -795,10 +928,33 @@
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   
   <script>
+    // Funkce pro rozbalení/zabalení formuláře pronájmu
+    function toggleRentalForm(formId) {
+      const forms = document.querySelectorAll('.rental-form-container');
+      forms.forEach(f => { if(f.id !== formId) f.classList.remove('active'); });
+      document.getElementById(formId).classList.toggle('active');
+      if (typeof refreshCursorListeners === "function") { refreshCursorListeners(); }
+    }
+
     // Optimalizovaný vlastní kurzor s detekcí hover stavů
     const cursorDot = document.querySelector('.cursor-dot');
     const cursorOutline = document.querySelector('.cursor-outline');
     
+    function refreshCursorListeners() {
+      if (window.matchMedia("(pointer: fine)").matches) {
+        const interactiveElements = document.querySelectorAll('a, button, select, input, .menu-btn, .close-modal, .seat');
+        interactiveElements.forEach(el => {
+            el.removeEventListener('mouseenter', addCursorHover);
+            el.removeEventListener('mouseleave', removeCursorHover);
+            el.addEventListener('mouseenter', addCursorHover);
+            el.addEventListener('mouseleave', removeCursorHover);
+        });
+      }
+    }
+
+    function addCursorHover() { document.body.classList.add('cursor-hover'); }
+    function removeCursorHover() { document.body.classList.remove('cursor-hover'); }
+
     if (window.matchMedia("(pointer: fine)").matches) {
         window.addEventListener('mousemove', e => {
             cursorDot.style.left = e.clientX + 'px';
@@ -806,29 +962,18 @@
             cursorOutline.style.left = e.clientX + 'px';
             cursorOutline.style.top = e.clientY + 'px';
         });
-
-        // Efekt zvětšení na interaktivních prvcích
-        function refreshCursorListeners() {
-          const interactiveElements = document.querySelectorAll('a, button, select, input, .menu-btn, .close-modal, .seat');
-          interactiveElements.forEach(el => {
-              el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-              el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-          });
-        }
         refreshCursorListeners();
     }
 
     // Interaktivní výběr sedadel v modalovém okně
     function selectSeat(seatElement) {
-      if (seatElement.classList.contains('occupied')) return; // Obsazené nelze vybrat
+      if (seatElement.classList.contains('occupied')) return;
       
-      // Jelikož si uživatel vybírá jedno konkrétní místo k rezervaci:
       const totalSelected = document.querySelectorAll('.seat.selected');
       totalSelected.forEach(s => { if (s !== seatElement) s.classList.remove('selected'); });
       
       seatElement.classList.toggle('selected');
       
-      // Uložení hodnoty do skrytého inputu formuláře
       const seatInput = document.getElementById('selected-seat-input');
       if (seatElement.classList.contains('selected')) {
         seatInput.value = "Sedadlo číslo " + seatElement.getAttribute('data-seat');
@@ -884,7 +1029,7 @@
       }
     }
 
-    // Univerzální přepínání modalů (Login i Rezervace)
+    // Univerzální přepínání modalů
     function toggleModal(modalId) { 
       document.getElementById(modalId).classList.toggle('active'); 
     }
@@ -904,7 +1049,7 @@
     }
     function syncName(form) { localStorage.setItem('kinoUser', form.querySelector('input').value); return true; }
 
-    // Mapový engine Leaflet + Fix renderu na flexu/gridu
+    // Mapový engine Leaflet
     window.onload = () => {
       updateUI();
       setTimeout(() => {
@@ -912,12 +1057,11 @@
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
         L.marker([49.0239, 16.2558]).addTo(map).bindPopup("<b>Kino ve mlýně</b>").openPopup();
         
-        // Oprava chybného zobrazení dlaždic mapy v CSS gridu
         setTimeout(() => { map.invalidateSize(); }, 400);
       }, 200);
     };
 
-    // Chatbot Jarvin / Vision AI logic
+    // Chatbot Jarvin
     function toggleJarvin() { document.getElementById("jarvin-window").classList.toggle("active"); }
     function jarvinReply() {
       const input = document.getElementById("user-input");
@@ -936,5 +1080,3 @@
   </script>
 </body>
 </html>
-
-
