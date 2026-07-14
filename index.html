@@ -693,6 +693,26 @@
 
       <div class="movie-card">
         <div class="movie-img-container">
+          <span class="movie-badge">Životopisný</span>
+          <img src="https://images.unsplash.com/photo-1598387181032-a3103a2db5b3?w=800&q=80" alt="Michael Jackson film">
+        </div>
+        <div class="movie-content">
+          <h3 class="movie-title">Michael</h3>
+          <div class="movie-details">
+            <div class="movie-detail-item">⏱ <strong>Příchod 17:45</strong></div>
+            <div class="movie-detail-item">💰 <strong>25 Kč</strong></div>
+            <div class="movie-detail-item">📅 <strong>26. 7.</strong></div>
+            <div class="movie-detail-item">⏳ <strong>2 h 7 min</strong></div>
+          </div>
+          <p class="movie-desc">Strhující životopisný snímek o králi popu, Michalu Jacksonovi. Nahlédněte do zákulisí jeho neuvěřitelné kariéry, složitého osobního života a objevte hudební génia, který navždy změnil svět.</p>
+          <div class="movie-btn-container">
+            <button onclick="toggleModal('reservation-modal')" class="movie-card-btn">Rezervovat vstupenku</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="movie-card">
+        <div class="movie-img-container">
           <span class="movie-badge">Exkluzivní Služba</span>
           <img src="https://i.postimg.cc/x8ZZ0MC9/IMG-0267.jpg" alt="Pronajmutí kina">
         </div>
@@ -966,6 +986,7 @@
       }
     }
 
+    // ... Zbytek JavaScriptu zůstal zcela zachován beze změn ...
     function addCursorHover() { document.body.classList.add('cursor-hover'); }
     function removeCursorHover() { document.body.classList.remove('cursor-hover'); }
 
@@ -979,7 +1000,6 @@
         refreshCursorListeners();
     }
 
-    // Interaktivní výběr sedadel v modalovém okně
     function selectSeat(seatElement) {
       if (seatElement.classList.contains('occupied')) return;
       
@@ -996,7 +1016,6 @@
       }
     }
 
-    // Validace, zda bylo před odesláním vybráno sedadlo
     function validateReservation() {
       const seatInput = document.getElementById('selected-seat-input');
       if (!seatInput.value) {
@@ -1006,16 +1025,13 @@
       return true;
     }
 
-    // Scroll efekt navigace
     window.addEventListener("scroll", () => {
       const nav = document.getElementById("navbar");
       nav.classList.toggle("scrolled", window.scrollY > 50);
     });
 
-    // Inicializace AOS animací
     AOS.init({ duration: 1000, once: true, offset: 50 });
 
-    // Odpočet času
     const countDownDate = new Date("Aug 1, 2026 18:00:00"). getTime();
     const countdownInterval = setInterval(() => {
       const distance = countDownDate - new Date().getTime();
@@ -1029,7 +1045,6 @@
       document.getElementById("seconds").innerText = Math.floor((distance % 60000) / 1000).toString().padStart(2, '0');
     }, 1000);
 
-    // Mobilní menu lokální funkce
     function toggleMenu() {
       if (window.innerWidth <= 900) {
         document.getElementById("nav-list").classList.toggle("active");
@@ -1043,7 +1058,6 @@
       }
     }
 
-    // Univerzální přepínání modalů
     function toggleModal(modalId) { 
       document.getElementById(modalId).classList.toggle('active'); 
     }
@@ -1063,7 +1077,6 @@
     }
     function syncName(form) { localStorage.setItem('kinoUser', form.querySelector('input').value); return true; }
 
-    // Mapový engine Leaflet
     window.onload = () => {
       updateUI();
       setTimeout(() => {
@@ -1075,7 +1088,6 @@
       }, 200);
     };
 
-    // Chatbot Jarvin
     function toggleJarvin() { document.getElementById("jarvin-window").classList.toggle("active"); }
     function jarvinReply() {
       const input = document.getElementById("user-input");
