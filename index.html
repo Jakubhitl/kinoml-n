@@ -644,18 +644,34 @@
         </div>
       </div>
 
-      <form action="https://formsubmit.co/kinovemlyne@seznam.cz" method="POST" onsubmit="return validateReservation()">
+            <form action="https://formsubmit.co/kinovemlyne@seznam.cz" method="POST" onsubmit="return validateReservation()">
         <input type="hidden" name="Vybrané sedadlo" id="selected-seat-input" required>
         
         <input type="text" name="Jméno" id="res-name" placeholder="Vaše jméno" required>
         <input type="email" name="Email" placeholder="Váš e-mail" required>
+        
+        <select name="Vybraná událost" required>
+          <option value="" disabled selected>Vyberte událost</option>
+          <option>Slavnostní otevření kina</option>
+          <option>Michael</option>
+          <option>Deadpool & Wolverine</option>
+          <option>Derby pražských "S"</option>
+        </select>
+
         <select name="Platba" required>
           <option value="" disabled selected>Způsob platby</option>
           <option>QR kód (předem)</option>
           <option>Na místě</option>
         </select>
+
+        <div style="text-align: left; margin: 15px 0; font-size: 0.85rem; display: flex; align-items: flex-start; gap: 8px;">
+          <input type="checkbox" id="terms-agreement" name="Souhlas s podmínkami" required style="width: 20px; height: 20px; margin-top: 2px; accent-color: #d4af37; cursor: pointer;">
+          <label for="terms-agreement" style="color: #ccc; cursor: pointer; line-height: 1.4;">Souhlasím s danou placenou částkou a přečetl jsem si v sekci aktuální program info o daném filmu.</label>
+        </div>
+
         <button type="submit" style="margin-top: 15px;">Potvrdit rezervaci</button>
       </form>
+
     </div>
   </div>
 
