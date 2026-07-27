@@ -310,6 +310,34 @@
     .legend-item { display: flex; align-items: center; gap: 6px; }
     .legend-box { width: 14px; height: 14px; border-radius: 4px; border: 1px solid; }
 
+    /* VLASTNÍ STYL ZAŠKRTÁVACÍHO POLÍČKA S FAJFCOU */
+    input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 4px;
+      outline: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+    input[type="checkbox"]:checked {
+      background: #d4af37;
+      border-color: #d4af37;
+    }
+    input[type="checkbox"]:checked::after {
+      content: "✔";
+      font-size: 14px;
+      color: #050505;
+      font-weight: bold;
+    }
+
     /* O KINĚ */
     .kino-container {
       display: grid;
@@ -480,16 +508,16 @@
     }
     @media (min-width: 768px) { .glass-card { padding: 50px 40px; border-radius: 30px; } }
 
-    form input, form select, .modal-content input, .glass-card input, .glass-card select, .rental-form input {
+    form input:not([type="checkbox"]), form select, .modal-content input:not([type="checkbox"]), .glass-card input:not([type="checkbox"]), .glass-card select, .rental-form input:not([type="checkbox"]) {
       width:100%; padding:14px; margin-bottom:12px;
       border-radius:12px; border: 1px solid rgba(255,255,255,0.1);
       background: rgba(0,0,0,0.6); color:white; font-family: 'Poppins', sans-serif;
       font-size: 0.95rem; -webkit-appearance: none; transition: all 0.3s ease;
       display: block;
     }
-    @media (min-width: 768px) { form input, form select, .modal-content input, .glass-card input, .glass-card select { padding: 18px; margin-bottom: 20px; border-radius:15px; font-size: 1rem; } }
+    @media (min-width: 768px) { form input:not([type="checkbox"]), form select, .modal-content input:not([type="checkbox"]), .glass-card input:not([type="checkbox"]), .glass-card select { padding: 18px; margin-bottom: 20px; border-radius:15px; font-size: 1rem; } }
     
-    form input:focus, form select:focus, .modal-content input:focus, .glass-card input:focus, .glass-card select:focus, .rental-form input:focus {
+    form input:not([type="checkbox"]):focus, form select:focus, .modal-content input:not([type="checkbox"]):focus, .glass-card input:not([type="checkbox"]):focus, .glass-card select:focus, .rental-form input:not([type="checkbox"]):focus {
       outline: none; border-color: #d4af37; box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); background: rgba(0,0,0,0.8);
     }
     form button, .modal-content button, .glass-card button, .rental-form button {
@@ -644,8 +672,10 @@
         </div>
       </div>
 
-            <form action="https://formsubmit.co/kinovemlyne@seznam.cz" method="POST" onsubmit="return validateReservation()">
+      <form action="https://formsubmit.co/kinovemlyne@seznam.cz" method="POST" onsubmit="return validateReservation()">
         <input type="hidden" name="Vybrané sedadlo" id="selected-seat-input" required>
+        <!-- Přesměrování po odeslání na diki.html (resp. diky.html) -->
+        <input type="hidden" name="_next" value="https://jakubhitl.github.io/kinoml-n/diky.html">
         
         <input type="text" name="Jméno" id="res-name" placeholder="Vaše jméno" required>
         <input type="email" name="Email" placeholder="Váš e-mail" required>
@@ -665,7 +695,7 @@
         </select>
 
         <div style="text-align: left; margin: 15px 0; font-size: 0.85rem; display: flex; align-items: flex-start; gap: 8px;">
-          <input type="checkbox" id="terms-agreement" name="Souhlas s podmínkami" required style="width: 20px; height: 20px; margin-top: 2px; accent-color: #d4af37; cursor: pointer;">
+          <input type="checkbox" id="terms-agreement" name="Souhlas s podmínkami" required style="width: 20px; height: 20px; margin-top: 2px; cursor: pointer;">
           <label for="terms-agreement" style="color: #ccc; cursor: pointer; line-height: 1.4;">Souhlasím s danou placenou částkou a přečetl jsem si v sekci aktuální program info o daném filmu.</label>
         </div>
 
@@ -753,49 +783,51 @@
           </div>
         </div>
       </div>
-<div class="movie-card">
-  <div class="movie-img-container">
-    <span class="movie-badge">Akční / Komedie</span>
-    <img src="https://i.postimg.cc/nhGM8jWJ/IMG-0283.jpg" alt="Deadpool & Wolverine">
-  </div>
-  <div class="movie-content">
-    <h3 class="movie-title">Deadpool & Wolverine</h3>
-    <div class="movie-details">
-      <div class="movie-detail-item">⏱ <strong>Příchod 15:30</strong></div>
-      <div class="movie-detail-item">💰 <strong>30 kč</strong></div>
-      <div class="movie-detail-item">📅 <strong>31.8</strong></div>
-      <div class="movie-detail-item">⏳ <strong>2 h 8 min</strong></div>
-    </div>
-    <p class="movie-desc">
-      Legendární dvojice se poprvé setkává na filmovém plátně. Deadpool a Wolverine se vydávají na šílenou akční misi plnou nečekaných zvratů, brutálních soubojů, černého humoru a nezapomenutelných momentů.
-    </p>
-    <div class="movie-btn-container">
-      <button onclick="toggleModal('reservation-modal')" class="movie-card-btn">Rezervovat vstupenku</button>
-    </div>
-  </div>
-</div>
 
-<div class="movie-card">
-  <div class="movie-img-container">
-    <span class="movie-badge">Sport (živé vysílání)</span>
-    <img src="https://i.postimg.cc/FHpzfZ6K/IMG-0289.jpg" alt="Džob">
-  </div>
-  <div class="movie-content">
-    <h3 class="movie-title">Derby pražských "S" (Sparta vs Slavia)</h3>
-    <div class="movie-details">
-      <div class="movie-detail-item">⏱ <strong>Čas bude upřesněn</strong></div>
-      <div class="movie-detail-item">💰 <strong>45kč</strong></div>
-      <div class="movie-detail-item">📅 <strong>29.8</strong></div>
-      <div class="movie-detail-item">⏳ <strong>Neznámo</strong></div>
-    </div>
-    <p class="movie-desc">
-          Dva odvěcí rivalové se znovu utkají v nejslavnějším českém derby. Buďte u toho s námi na velkém plátně!
-    </p>
-    <div class="movie-btn-container">
-      <button onclick="toggleModal('reservation-modal')" class="movie-card-btn">Rezervovat vstupenku</button>
-    </div>
-  </div>
-</div>
+      <div class="movie-card">
+        <div class="movie-img-container">
+          <span class="movie-badge">Akční / Komedie</span>
+          <img src="https://i.postimg.cc/nhGM8jWJ/IMG-0283.jpg" alt="Deadpool & Wolverine">
+        </div>
+        <div class="movie-content">
+          <h3 class="movie-title">Deadpool & Wolverine</h3>
+          <div class="movie-details">
+            <div class="movie-detail-item">⏱ <strong>Příchod 15:30</strong></div>
+            <div class="movie-detail-item">💰 <strong>30 kč</strong></div>
+            <div class="movie-detail-item">📅 <strong>31.8</strong></div>
+            <div class="movie-detail-item">⏳ <strong>2 h 8 min</strong></div>
+          </div>
+          <p class="movie-desc">
+            Legendární dvojice se poprvé setkává na filmovém plátně. Deadpool a Wolverine se vydávají na šílenou akční misi plnou nečekaných zvratů, brutálních soubojů, černého humoru a nezapomenutelných momentů.
+          </p>
+          <div class="movie-btn-container">
+            <button onclick="toggleModal('reservation-modal')" class="movie-card-btn">Rezervovat vstupenku</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="movie-card">
+        <div class="movie-img-container">
+          <span class="movie-badge">Sport (živé vysílání)</span>
+          <img src="https://i.postimg.cc/FHpzfZ6K/IMG-0289.jpg" alt="Džob">
+        </div>
+        <div class="movie-content">
+          <h3 class="movie-title">Derby pražských "S" (Sparta vs Slavia)</h3>
+          <div class="movie-details">
+            <div class="movie-detail-item">⏱ <strong>Čas bude upřesněn</strong></div>
+            <div class="movie-detail-item">💰 <strong>45kč</strong></div>
+            <div class="movie-detail-item">📅 <strong>29.8</strong></div>
+            <div class="movie-detail-item">⏳ <strong>Neznámo</strong></div>
+          </div>
+          <p class="movie-desc">
+                Dva odvěcí rivalové se znovu utkají v nejslavnějším českém derby. Buďte u toho s námi na velkém plátně!
+          </p>
+          <div class="movie-btn-container">
+            <button onclick="toggleModal('reservation-modal')" class="movie-card-btn">Rezervovat vstupenku</button>
+          </div>
+        </div>
+      </div>
+
       <div class="movie-card">
         <div class="movie-img-container">
           <span class="movie-badge">Exkluzivní Služba</span>
@@ -982,26 +1014,26 @@
     </div>
   </section>
 
-<section id="originals" style="background: #080808;">
-  <h2 data-aos="fade-up">Kino ve mlýně Originals</h2>
-  <div class="originals-container" data-aos="zoom-in" style="max-width: 800px; margin: 0 auto; grid-template-columns: 1fr;">
-    
-    <div class="originals-intro-text" style="text-align: center; margin-bottom: 40px; border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding-bottom: 25px;">
-      <p style="font-size: 1.1rem; line-height: 1.8; opacity: 0.9;">
-        Projekt <strong>KVM Originals</strong> přináší exkluzivní autorské filmy, které vznikají přímo v autentických prostorech našeho mlýna. Necháváme ožít jedinečnou atmosféru tohoto místa, jeho bohatou historii a propojujeme je s napínavými příběhy. Každý snímek z této produkce je stvořen speciálně pro plátno Kina ve mlýně a nikde jinde ho neuvidíte.
-      </p>
-    </div>
+  <section id="originals" style="background: #080808;">
+    <h2 data-aos="fade-up">Kino ve mlýně Originals</h2>
+    <div class="originals-container" data-aos="zoom-in" style="max-width: 800px; margin: 0 auto; grid-template-columns: 1fr;">
+      
+      <div class="originals-intro-text" style="text-align: center; margin-bottom: 40px; border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding-bottom: 25px;">
+        <p style="font-size: 1.1rem; line-height: 1.8; opacity: 0.9;">
+          Projekt <strong>KVM Originals</strong> přináší exkluzivní autorské filmy, které vznikají přímo v autentických prostorech našeho mlýna. Necháváme ožít jedinečnou atmosféru tohoto místa, jeho bohatou historii a propojujeme je s napínavými příběhy. Každý snímek z této produkce je stvořen speciálně pro plátno Kina ve mlýně a nikde jinde ho neuvidíte.
+        </p>
+      </div>
 
-    <div class="originals-info" style="text-align: center;">
-      <span class="originals-badge">🎬 V PRODUKCI (odhadovaný čas filmu 8 min)</span>
-      <h3 style="font-size: 2.5rem; letter-spacing: 2px; margin-top: 10px;">MLYNÁŘ</h3>
-      <p style="margin-top: 15px; font-size: 1.05rem; line-height: 1.8;">
-        Jakub nade vše miluje svůj klid a historický rodinný mlýn. Když jeho žena odjíždí na pár dní pryč, těší se na zaslouženou pohodu a samotu. Idylu ale drsně naruší příchod arogantního Vagena, který chce pozemek získat za každou cenu pro stavbu továrny. Jakub odmítá, jenže Vagen nebere „ne“ jako odpověď a rozjíždí nebezpečnou hru, která se všem rychle vymkne z rukou...
-      </p>
-    </div>
+      <div class="originals-info" style="text-align: center;">
+        <span class="originals-badge">🎬 V PRODUKCI (odhadovaný čas filmu 8 min)</span>
+        <h3 style="font-size: 2.5rem; letter-spacing: 2px; margin-top: 10px;">MLYNÁŘ</h3>
+        <p style="margin-top: 15px; font-size: 1.05rem; line-height: 1.8;">
+          Jakub nade vše miluje svůj klid a historický rodinný mlýn. Když jeho žena odjíždí na pár dní pryč, těší se na zaslouženou pohodu a samotu. Idylu ale drsně naruší příchod arogantního Vagena, který chce pozemek získat za každou cenu pro stavbu továrny. Jakub odmítá, jenže Vagen nebere „ne“ jako odpověď a rozjíždí nebezpečnou hru, která se všem rychle vymkne z rukou...
+        </p>
+      </div>
 
-  </div>
-</section>
+    </div>
+  </section>
 
   <section id="podpora" style="background:#050505; text-align: center;">
     <div data-aos="fade-up">
@@ -1126,7 +1158,7 @@
 
     AOS.init({ duration: 1000, once: true, offset: 50 });
 
-    const countDownDate = new Date("Aug 1, 2026 18:00:00"). getTime();
+    const countDownDate = new Date("Aug 1, 2026 18:00:00").getTime();
     const countdownInterval = setInterval(() => {
       const distance = countDownDate - new Date().getTime();
       if (distance < 0) {
